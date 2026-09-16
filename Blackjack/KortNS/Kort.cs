@@ -23,9 +23,9 @@ public class Kort
         Otte,
         Ni,
         Ti,
-        Knægt,
-        Dronning,
-        Konge
+        Knægt = 10,
+        Dronning = 10,
+        Konge = 10
     }
 
     public Kort(Værdi værdi, Kulør kulør)
@@ -37,5 +37,15 @@ public class Kort
     public override string ToString()
     {
         return kulør + " " + værdi;
+    }
+
+    public Kulør getKulør()
+    {
+        return kulør;
+    }
+
+    public Værdi getVærdi()
+    {
+        return værdi;
     }
 }
