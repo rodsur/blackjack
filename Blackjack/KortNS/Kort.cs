@@ -23,9 +23,9 @@ public class Kort
         Otte,
         Ni,
         Ti,
-        Knægt = 10,
-        Dronning = 10,
-        Konge = 10
+        Knægt,
+        Dronning,
+        Konge
     }
 
     public Kort(Værdi værdi, Kulør kulør)

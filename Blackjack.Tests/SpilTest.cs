@@ -48,4 +48,13 @@ public class SpilTest
         hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Hjerter));
         Assert.That(spil.UdregnHånd(hånd),Is.EqualTo(13));
     }
+    
+    [Test]
+    public void UdregnhåndTestFlereEs()
+    {
+        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Klør));
+        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Hjerter));
+        Assert.That(spil.UdregnHånd(hånd),Is.EqualTo(22));
+    }
+    
 }

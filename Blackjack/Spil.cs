@@ -1,4 +1,5 @@
-﻿using Blackjack.KortNS;
+﻿using System.ComponentModel;
+using Blackjack.KortNS;
 
 namespace Blackjack;
 
@@ -10,24 +11,27 @@ public class Spil
         int esVærdi = 0;
         foreach (var kort in hånd)
         {
-            if (kort.getVærdi() == Kort.Værdi.Es)
+            switch (kort.getVærdi())
             {
-                if (esVærdi == 0)
-                {
-                    if (håndVærdi < 11)
+                case Kort.Værdi.Es:
+                    if (esVærdi == 0 && håndVærdi < 11)
                     {
                         esVærdi = 11;
-                    }
-                    else
+                    } else if (esVærdi == 0)
                     {
                         esVærdi = 1;
                     }
-                }
-
-                håndVærdi += esVærdi;
-                continue;
+                    håndVærdi += esVærdi;
+                    break;
+                case Kort.Værdi.Konge:
+                case Kort.Værdi.Dronning:
+                case Kort.Værdi.Knægt:
+                    håndVærdi += 10;
+                    break;
+                default:
+                    håndVærdi += (int)kort.getVærdi();
+                    break;
             }
-            håndVærdi += (int)kort.getVærdi();
         }
         return håndVærdi;
     }
