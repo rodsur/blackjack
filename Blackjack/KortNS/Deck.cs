@@ -1,4 +1,4 @@
-﻿namespace Blackjack.Kort;
+﻿namespace Blackjack.KortNS;
 
 public class Deck : IDeck
 {

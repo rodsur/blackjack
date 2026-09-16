@@ -1,5 +1,5 @@
 ﻿using System;
-using Blackjack.Kort;
+using Blackjack.KortNS;
 using NUnit.Framework;
 
 namespace Blackjack.Tests.Kort;
