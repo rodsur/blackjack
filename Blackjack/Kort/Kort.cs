@@ -1,0 +1,41 @@
+﻿namespace Blackjack.Kort;
+
+public class Kort
+{
+    private Værdi værdi;
+    private Kulør kulør;
+    public enum Kulør
+    {
+        Hjerter,
+        Spar,
+        Klør,
+        Ruder
+    }
+    public enum Værdi
+    {
+        Es = 1,
+        To,
+        Tre,
+        Fire,
+        Fem,
+        Seks,
+        Syv,
+        Otte,
+        Ni,
+        Ti,
+        Knægt,
+        Dronning,
+        Konge
+    }
+
+    public Kort(Værdi værdi, Kulør kulør)
+    {
+        this.værdi = værdi;
+        this.kulør = kulør;
+    }
+
+    public override string ToString()
+    {
+        return kulør + " " + værdi;
+    }
+}
