@@ -27,7 +27,7 @@ public class Deck : IDeck
         return kort;
     }
 
-    public void Shuffle()
+    public void Bland()
     {
         deck = deck.Shuffle().ToList();
     }

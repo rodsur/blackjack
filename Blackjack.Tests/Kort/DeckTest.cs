@@ -16,10 +16,10 @@ public class DeckTest
     }
     
     [Test]
-    public void ShuffleTest()
+    public void BlandTest()
     {
         Deck blandetDeck = new Deck();
-        blandetDeck.Shuffle();
+        blandetDeck.Bland();
         String kortFraBlandetDeck = blandetDeck.Træk().ToString();
         String kortFraIkkeBlandetDeck = _ikkeBlandetDeck.Træk().ToString();
         Assert.That(kortFraBlandetDeck,Is.Not.EqualTo(kortFraIkkeBlandetDeck));
