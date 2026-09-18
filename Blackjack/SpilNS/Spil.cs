@@ -43,6 +43,16 @@ public class Spil
         return håndVærdi;
     }
 
+    public int UdregnHånd(ReadOnlyCollection<Kort> hånd)
+    {
+        return UdregnHånd(new List<Kort>(hånd));
+    }
+
+    public int UdregnHånd(ISpiller spiller)
+    {
+        return UdregnHånd(spiller.GetROHånd());
+    }
+
     private static int UdregnEsVærdi(int esVærdi, int håndVærdi)
     {
         if (håndVærdi < 11) {
@@ -79,7 +89,7 @@ public class Spil
         }
     }
 
-    private void UddelKortTilSpiller(ISpiller spiller)
+    public void UddelKortTilSpiller(ISpiller spiller)
     {
         spiller.TilføjKort(deck.Træk());
     }
