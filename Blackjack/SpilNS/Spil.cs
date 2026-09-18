@@ -1,4 +1,5 @@
-﻿using Blackjack.KortNS;
+﻿using System.Collections.ObjectModel;
+using Blackjack.KortNS;
 
 namespace Blackjack.SpilNS;
 
@@ -22,14 +23,12 @@ public class Spil
             switch (kort.getVærdi())
             {
                 case Kort.Værdi.Es:
-                    if (esVærdi == 0 && håndVærdi < 11)
-                    {
-                        esVærdi = 11;
-                    } else if (esVærdi == 0)
-                    {
-                        esVærdi = 1;
+                    if (esVærdi != 0) {
+                        håndVærdi += esVærdi;
+                    } else {
+                        esVærdi = UdregnEsVærdi(esVærdi, håndVærdi);
+                        håndVærdi += esVærdi;
                     }
-                    håndVærdi += esVærdi;
                     break;
                 case Kort.Værdi.Konge:
                 case Kort.Værdi.Dronning:
@@ -43,20 +42,50 @@ public class Spil
         }
         return håndVærdi;
     }
-    
-    public void Setup()
+
+    private static int UdregnEsVærdi(int esVærdi, int håndVærdi)
     {
-        spillere.Add(new Spiller());
-        spillere.Add(new Spiller());
-        deck.Bland();
-        UddelKort(spillere[0]);
-        UddelKort(spillere[1]);
-        UddelKort(spillere[0]);
-        UddelKort(spillere[1]);
+        if (håndVærdi < 11) {
+            esVærdi = 11;
+        } else {
+            esVærdi = 1;
+        }
+        return esVærdi;
     }
 
-    public void UddelKort(ISpiller spiller)
+    public void Setup()
+    {
+        TilføjSpillere(2);
+        deck.Bland();
+        UddelKortTilAlleSpillere(2);
+    }
+
+    private void TilføjSpillere(int antalSpillere)
+    {
+        for (int i = 0; i < antalSpillere; i++)
+        {
+            spillere.Add(new Spiller());
+        }
+    }
+
+    private void UddelKortTilAlleSpillere(int antalKort)
+    {
+        for (int kortUddelt = 0; kortUddelt < antalKort; kortUddelt++)
+        {
+            foreach(var spiller in spillere)
+            {
+                UddelKortTilSpiller(spiller);
+            }
+        }
+    }
+
+    private void UddelKortTilSpiller(ISpiller spiller)
     {
         spiller.TilføjKort(deck.Træk());
     }
+
+    public ReadOnlyCollection<ISpiller> GetROSpillere()
+    {
+        return spillere.AsReadOnly();
+    } 
 }

@@ -7,6 +7,11 @@ public class Spiller : ISpiller
 {
     private List<Kort> hånd;
 
+    public Spiller()
+    {
+        hånd = new List<Kort>();
+    }
+
     public void TilføjKort(Kort kort)
     {
         hånd.Add(kort);
