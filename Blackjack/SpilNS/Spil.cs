@@ -1,10 +1,18 @@
-﻿using System.ComponentModel;
-using Blackjack.KortNS;
+﻿using Blackjack.KortNS;
 
-namespace Blackjack;
+namespace Blackjack.SpilNS;
 
 public class Spil
 {
+    private List<ISpiller> spillere;
+    private IDeck deck;
+
+    public Spil()
+    {
+        spillere = new List<ISpiller>();
+        deck = new Deck();
+    }
+    
     public int UdregnHånd(List<Kort> hånd)
     {
         int håndVærdi = 0;
@@ -34,5 +42,21 @@ public class Spil
             }
         }
         return håndVærdi;
+    }
+    
+    public void Setup()
+    {
+        spillere.Add(new Spiller());
+        spillere.Add(new Spiller());
+        deck.Bland();
+        UddelKort(spillere[0]);
+        UddelKort(spillere[1]);
+        UddelKort(spillere[0]);
+        UddelKort(spillere[1]);
+    }
+
+    public void UddelKort(ISpiller spiller)
+    {
+        spiller.TilføjKort(deck.Træk());
     }
 }

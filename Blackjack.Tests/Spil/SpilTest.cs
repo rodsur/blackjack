@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
 using NUnit.Framework;
 
-namespace Blackjack.Tests;
+namespace Blackjack.Tests.Spil;
 
 [TestFixture]
-[TestOf(typeof(Spil))]
+[TestOf(typeof(SpilNS.Spil))]
 public class SpilTest
 {
     private List<KortNS.Kort> hånd;
-    private Spil spil;
+    private SpilNS.Spil spil;
     [SetUp]
     public void Setup()
     {
         hånd = [];
-        spil = new Spil();
+        spil = new SpilNS.Spil();
     }
 
     [Test]
