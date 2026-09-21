@@ -27,7 +27,9 @@ public class Spil
     public void SpilLoop()
     {
         bool spilIgang = true;
-        while (spilIgang)
+        bool dealerUde = false;
+        bool spillerUde = false;
+        while (!dealerUde && !spillerUde)
         {
             OplysSpillerOmKortOgVærdi();
             int brugerValg = HitEllerStand();
@@ -37,32 +39,58 @@ public class Spil
                     UddelKortTilSpiller(spiller);
                     if (UdregnHånd(spiller) > 21)
                     {
-                        grænseflade.SkrivBesked("Du har mere end 21 point, du har tabt");
-                        spilIgang = false;
-                    } else if (UdregnHånd(spiller) == 21)
-                    {
-                        grænseflade.SkrivBesked("Du fik 21, tillykke du har vundet!");
+                        spillerUde = true;
                     }
                     break;
                 case 2:
-                    int spillerPoint = UdregnHånd(spiller);
-                    int dealerPoint = UdregnHånd(dealer);
-                    if (dealerPoint > spillerPoint)
-                    {
-                        grænseflade.SkrivBesked("Du tabte til dealeren");
-                    } else if (spillerPoint > dealerPoint)
-                    {
-                        grænseflade.SkrivBesked("Tillykke du vandt over dealeren");
-                    }
-                    else
-                    {
-                        grænseflade.SkrivBesked("I stod lige, bedre held næste gang");
-                    }
-
-                    spilIgang = false;
+                    spillerUde = true;
                     break;
             }
+
+            if (SkalDealerHit())
+            {
+                UddelKortTilSpiller(dealer);
+                if (UdregnHånd(dealer) > 21)
+                {
+                    dealerUde = true;
+                }
+            }
+            else
+            {
+                dealerUde = true;
+            }
         }
+        int spillerPoint = UdregnHånd(spiller);
+        int dealerPoint = UdregnHånd(dealer);
+        grænseflade.SkrivBesked("Du har: " + spillerPoint + " og dealeren har: " + dealerPoint);
+        if (dealerPoint > 21 && spillerPoint > 21)
+        {
+            grænseflade.SkrivBesked("I gik begge bust, bedre held næste gang");
+        } else if (spillerPoint > 21)
+        {
+            grænseflade.SkrivBesked("Du er bust, bedre held næste gang");
+        } else if (dealerPoint > 21)
+        {
+            grænseflade.SkrivBesked("Dealeren er bust, tillykke du vandt");
+        } else if (dealerPoint == spillerPoint)
+        {
+            grænseflade.SkrivBesked("I stod lige, bedre held næste gang");
+        } else if (dealerPoint > spillerPoint)
+        {
+            grænseflade.SkrivBesked("Dealeren vandt, bedre held næste gang");
+        } else if (dealerPoint < spillerPoint)
+        {
+            grænseflade.SkrivBesked("Du vandt over dealeren, tillykke");
+        }
+    }
+
+    private bool SkalDealerHit()
+    {
+        if (UdregnHånd(spiller) > 21)
+        {
+            return false;
+        }
+        return UdregnHånd(dealer) < 17 || (UdregnHånd(spiller) >= UdregnHånd(dealer));
     }
 
     private int HitEllerStand()
