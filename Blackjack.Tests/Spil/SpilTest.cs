@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using Blackjack.Grænseflade;
+using Blackjack.KortNS;
+using Blackjack.SpilNS;
 using NUnit.Framework;
 
 namespace Blackjack.Tests.Spil;
@@ -7,54 +10,55 @@ namespace Blackjack.Tests.Spil;
 [TestOf(typeof(SpilNS.Spil))]
 public class SpilTest
 {
-    private List<KortNS.Kort> hånd;
-    private SpilNS.Spil spil;
+    private List<KortNS.Kort> _hånd;
+    private SpilNS.Spil _spil;
+    
     [SetUp]
     public void Setup()
     {
-        hånd = [];
-        spil = new SpilNS.Spil();
+        _hånd = [];
+        _spil = new SpilNS.Spil(new TekstGrænseflade(), new Spiller(), new Spiller(), new Deck());
     }
 
     [Test]
     public void Udregnhånd5plus5Test()
     {
         
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Fem, KortNS.Kort.Kulør.Klør));
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Fem, KortNS.Kort.Kulør.Hjerter));
-        Assert.That(spil.UdregnHånd(hånd),Is.EqualTo(10));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Fem, KortNS.Kort.Kulør.Klør));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Fem, KortNS.Kort.Kulør.Hjerter));
+        Assert.That(_spil.UdregnHånd(_hånd),Is.EqualTo(10));
     }
     
     [Test]
     public void UdregnhåndBilledKortTest()
     {
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Dronning, KortNS.Kort.Kulør.Klør));
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Konge, KortNS.Kort.Kulør.Hjerter));
-        Assert.That(spil.UdregnHånd(hånd),Is.EqualTo(20));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Dronning, KortNS.Kort.Kulør.Klør));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Konge, KortNS.Kort.Kulør.Hjerter));
+        Assert.That(_spil.UdregnHånd(_hånd),Is.EqualTo(20));
     }
     
     [Test]
     public void UdregnhåndTestEsSom11()
     {
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Ti, KortNS.Kort.Kulør.Klør));
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Hjerter));
-        Assert.That(spil.UdregnHånd(hånd),Is.EqualTo(21));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Ti, KortNS.Kort.Kulør.Klør));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Hjerter));
+        Assert.That(_spil.UdregnHånd(_hånd),Is.EqualTo(21));
     }
     [Test]
     public void UdregnhåndTestEsSom1()
     {
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.To, KortNS.Kort.Kulør.Klør));
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Knægt, KortNS.Kort.Kulør.Klør));
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Hjerter));
-        Assert.That(spil.UdregnHånd(hånd),Is.EqualTo(13));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.To, KortNS.Kort.Kulør.Klør));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Knægt, KortNS.Kort.Kulør.Klør));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Hjerter));
+        Assert.That(_spil.UdregnHånd(_hånd),Is.EqualTo(13));
     }
     
     [Test]
     public void UdregnhåndTestFlereEs()
     {
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Klør));
-        hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Hjerter));
-        Assert.That(spil.UdregnHånd(hånd),Is.EqualTo(22));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Klør));
+        _hånd.Add(new KortNS.Kort(KortNS.Kort.Værdi.Es, KortNS.Kort.Kulør.Hjerter));
+        Assert.That(_spil.UdregnHånd(_hånd),Is.EqualTo(22));
     }
     
 }

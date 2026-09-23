@@ -7,26 +7,23 @@ namespace Blackjack.SpilNS;
 
 public class Spil
 {
-    private List<ISpiller> spillere;
     private ISpiller dealer;
     private ISpiller spiller;
     private IDeck deck;
     private IGrænseflade grænseflade;
-
-    public Spil()
+    
+    public Spil(IGrænseflade grænseflade, ISpiller dealer, ISpiller spiller, IDeck deck)
     {
-        grænseflade = new TekstGrænseflade();
-        spillere = new List<ISpiller>();
-        dealer = new Spiller();
-        spiller = new Spiller();
-        deck = new Deck();
-        deck.Bland();
-        UddelStartKort();
+        this.grænseflade = grænseflade;
+        this.dealer = dealer;
+        this.spiller = spiller;
+        this.deck = deck;
     }
     
     public void SpilLoop()
     {
-        bool spilIgang = true;
+        deck.Bland();
+        UddelStartKort();
         bool dealerUde = false;
         bool spillerUde = false;
         while (!dealerUde && !spillerUde)
@@ -47,21 +44,31 @@ public class Spil
                     break;
             }
 
-            if (SkalDealerHit())
-            {
-                UddelKortTilSpiller(dealer);
-                if (UdregnHånd(dealer) > 21)
-                {
-                    dealerUde = true;
-                }
-            }
-            else
+            dealerUde = DealerHandling(dealerUde);
+        }
+        UdregnOgPræsenterVinder(UdregnHånd(spiller), UdregnHånd(dealer));
+    }
+
+    private bool DealerHandling(bool dealerUde)
+    {
+        if (SkalDealerHit())
+        {
+            UddelKortTilSpiller(dealer);
+            if (UdregnHånd(dealer) > 21)
             {
                 dealerUde = true;
             }
         }
-        int spillerPoint = UdregnHånd(spiller);
-        int dealerPoint = UdregnHånd(dealer);
+        else
+        {
+            dealerUde = true;
+        }
+
+        return dealerUde;
+    }
+
+    private void UdregnOgPræsenterVinder(int spillerPoint, int dealerPoint)
+    {
         grænseflade.SkrivBesked("Du har: " + spillerPoint + " og dealeren har: " + dealerPoint);
         if (dealerPoint > 21 && spillerPoint > 21)
         {
