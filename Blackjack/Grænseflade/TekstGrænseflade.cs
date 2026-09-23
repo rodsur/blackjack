@@ -16,7 +16,7 @@ public class TekstGrænseflade : IGrænseflade
         while (!inputHåndteret)
         {
             Console.WriteLine(besked);
-            String input = Console.ReadLine() ?? "";
+            String input = Console.ReadLine() ?? throw new NullReferenceException("input var null");
             inputInt = IntegerType.FromString(input);
             if (inputInt < 1 || inputInt > antalValgmuligheder)
             {
