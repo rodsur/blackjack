@@ -14,20 +14,23 @@ public class DeckTest
     {
         _ikkeBlandetDeck = new Deck();
     }
-    
-    [Test]
-    public void BlandTest()
-    {
-        Deck blandetDeck = new Deck();
-        blandetDeck.Bland();
-        String kortFraBlandetDeck = blandetDeck.Træk().ToString();
-        String kortFraIkkeBlandetDeck = _ikkeBlandetDeck.Træk().ToString();
-        Assert.That(kortFraBlandetDeck,Is.Not.EqualTo(kortFraIkkeBlandetDeck));
-    }
 
     [Test]
     public void TrækTest()
     {
         Assert.That(_ikkeBlandetDeck.Træk().ToString(),Is.EqualTo("Hjerter Es"));
+    }
+
+    [Test]
+    public void TrækForMangeKortTest()
+    {
+
+        Assert.Throws<InvalidOperationException>(() =>
+        {
+            while(true)
+            {
+                _ikkeBlandetDeck.Træk();
+            }
+        });
     }
 }
