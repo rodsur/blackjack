@@ -1,4 +1,4 @@
-﻿namespace Blackjack.Kort;
+﻿namespace Blackjack.KortNS;
 
 public class Kort
 {
@@ -37,5 +37,15 @@ public class Kort
     public override string ToString()
     {
         return kulør + " " + værdi;
+    }
+
+    public Kulør getKulør()
+    {
+        return kulør;
+    }
+
+    public Værdi getVærdi()
+    {
+        return værdi;
     }
 }
